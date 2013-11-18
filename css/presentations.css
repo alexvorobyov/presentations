@@ -67,12 +67,10 @@ body a, body a:visited {
 }
 
 .presentation-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: none;
     height: 800px;
     width: 1200px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 100px;
     -webkit-box-shadow: inset -1px 0px 15px rgba(0, 0, 0, 0.75);

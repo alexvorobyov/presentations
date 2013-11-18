@@ -171,9 +171,7 @@
 
   Presentation.prototype.prev = function() {
     if (this.currentSlideNumber - 1 >= 0) {
-      this._showSlide(this.currentSlideNumber - 1, {
-        prev : true
-      })
+      this._showSlide(this.currentSlideNumber - 1)
     }
   };
 
@@ -191,6 +189,10 @@
 
   Presentation.prototype._showSlide = function(slideNumber, opts) {
     opts = opts || {};
+
+    if (this.currentSlideNumber - 1 == slideNumber) {
+      opts.prev = true;
+    }
 
     if (this.currentSlide) {
       if (opts.force) {
