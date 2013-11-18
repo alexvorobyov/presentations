@@ -1,0 +1,163 @@
+body {
+    font-family: "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif;
+}
+
+body.presentation-active {
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    margin: -400px 0 0 -600px;
+    width: 1200px;
+    height: 800px;
+    background-color: #000;
+    text-shadow: 0 1px 1px #fff;
+}
+
+body.presentation-list {
+    transform: none!important;
+    -webkit-transform: none!important;
+    -moz-transform: none!important;
+    -o-transform: none!important;
+}
+
+body.presentation-active .presentations-menu {
+    display: none;
+}
+
+body a, body a:visited {
+    color: #4682C4;
+}
+
+.presentations-menu {
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+.presentations-menu li {
+    margin: 20px 0;
+    color: #555;
+    font-size: 19px;
+}
+
+.presentation-title {
+    display: none;
+}
+
+.presentation-controls {
+    position: absolute;
+    bottom: 12px;
+    font-size: 30px;
+    left: 14px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.presentation-controls a {
+    cursor: pointer;
+}
+
+.presentation-controls.presentation-controls-last .presentation-controls-next, .presentation-controls.presentation-controls-first .presentation-controls-prev {
+    cursor: default;
+    color: #333;
+}
+
+.presentation-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    height: 800px;
+    width: 1200px;
+    box-sizing: border-box;
+    padding: 100px;
+    -webkit-box-shadow: inset -1px 0px 15px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset -1px 0px 15px rgba(0, 0, 0, 0.75);
+    box-shadow: inset -1px 0px 15px rgba(0, 0, 0, 0.75);
+    background-color: #fff;
+}
+
+.presentation-slide {
+    color: #000;
+}
+
+.presentation-slide h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.presentation-slide h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.presentation-slide p {
+    margin: 15px 0;
+    line-height: 25px;
+}
+
+.presentation-slide ul, .presentation-slide ol {
+    padding-left: 20px;
+    line-height: 25px;
+}
+
+.presentation-slide ul {
+    list-style-type: circle;
+}
+
+.presentation-slide ol {
+    list-style-type: decimal;
+}
+
+.presentation-slide li {
+    margin-bottom: 20px;
+}
+
+.presentation-slide table {
+    border-collapse: collapse;
+}
+
+.presentation-slide table td {
+    border: 1px solid #999;
+    padding: 8px 20px;
+    text-align: center;
+}
+
+.presentation-slide .presentation-slide-center {
+    top: 50%;
+    left: 0%;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+
+.presentation-slide .presentation-slide-footer {
+    bottom: 20px;
+    position: absolute;
+    font-size: 12px;
+}
+
+.presentation-slide-next {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.presentation-slide-next.presentation-slide-visibility {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.presentation-slide-next.presentation-slide-transition {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transition: opacity 0.4s ease-out;
+    -moz-transition: opacity 0.4s ease-out;
+    -o-transition: opacity 0.4s ease-out;
+    transition: opacity 0.4s ease-out;
+}
