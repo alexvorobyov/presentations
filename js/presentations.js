@@ -16,7 +16,7 @@
   };
 
   PresentationsController.prototype.init = function() {
-    this.buildMenu();
+    this._buildMenu();
 
     var self = this;
 
@@ -33,13 +33,11 @@
 
         presentation.next();
       }
-
       event.preventDefault();
     })
-
   };
 
-  PresentationsController.prototype.buildMenu = function() {
+  PresentationsController.prototype._buildMenu = function() {
     if (this.menu) return;
 
     this.menu = $('<ul class="presentations-menu"></ul>');
@@ -79,11 +77,39 @@
 
     $('body').addClass('presentation-active').removeClass('presentation-list');
 
-    this.attachListeners();
-    this.createControls();
+    this._createControls();
+    this._attachListeners();
   };
 
-  Presentation.prototype.attachListeners = function() {
+  Presentation.prototype.next = function() {
+    if (this.currentSlideNumber + 1 < this.slides.length) {
+      this._showSlide(this.currentSlideNumber + 1)
+    }
+  };
+
+  Presentation.prototype.prev = function() {
+    if (this.currentSlideNumber - 1 >= 0) {
+      this._showSlide(this.currentSlideNumber - 1)
+    }
+  };
+
+  Presentation.prototype.destroy = function() {
+    $(document)
+      .unbind('keydown', this.keyDownListener)
+      .unbind('mousemove', this.controlsMouseMoveListener);
+    $(window).unbind('resize', this.resizeListener);
+
+    this.controls.unbind('click', this.controlsClickListener);
+    this.controls.remove();
+
+    this.slideNumber.remove();
+
+    this.slides.hide();
+    this.slides.find('.presentation-slide-next').attr('class', 'presentation-slide-next');
+    $('body').addClass('presentation-list').removeClass('presentation-active');
+  };
+
+  Presentation.prototype._attachListeners = function() {
     var self = this,
         body = $('body'),
         win = $(window),
@@ -134,7 +160,7 @@
     this.resizeListener();
   };
 
-  Presentation.prototype.createControls = function() {
+  Presentation.prototype._createControls = function() {
     this.controls = $([
       '<div class="presentation-controls">',
       '<a class="presentation-controls-prev">&lt;</a>',
@@ -142,11 +168,17 @@
       '<a class="presentation-controls-next">&gt;</a>',
       '</div>'
     ].join(''));
+    this.slideNumber = $('<div class="presentation-slide-number"></div>');
 
-    $('body').append(this.controls);
+    var win = $(window),
+        self = this,
+        controlsVisible = false;
 
-    var self = this;
-    this.controls.on('click', this.controlsListener = function(event) {
+    $('body')
+      .append(this.controls)
+      .append(this.slideNumber);
+
+    this.controls.on('click', this.controlsClickListener = function(event) {
       var target = $(event.target);
 
       if (target.is('.presentation-controls-prev')) {
@@ -158,33 +190,21 @@
       else if (target.is('.presentation-controls-next')) {
         self.next();
       }
-
       event.preventDefault();
-    })
-  };
+    });
 
-  Presentation.prototype.next = function() {
-    if (this.currentSlideNumber + 1 < this.slides.length) {
-      this._showSlide(this.currentSlideNumber + 1)
-    }
-  };
+    $(document).on('mousemove', this.controlsMouseMoveListener = function(event) {
+      var winHeight = win.height();
 
-  Presentation.prototype.prev = function() {
-    if (this.currentSlideNumber - 1 >= 0) {
-      this._showSlide(this.currentSlideNumber - 1)
-    }
-  };
-
-  Presentation.prototype.destroy = function() {
-    $(document).unbind('keydown', this.keyDownListener);
-    $(window).unbind('resize', this.resizeListener);
-
-    this.controls.unbind('click', this.controlsListener);
-    this.controls.remove();
-
-    this.slides.hide();
-    this.slides.find('.presentation-slide-next').attr('class', 'presentation-slide-next');
-    $('body').addClass('presentation-list').removeClass('presentation-active');
+      if (winHeight - event.pageY < 100 && !controlsVisible) {
+        controlsVisible = true;
+        self.controls.addClass('presentation-controls-visible');
+      }
+      if (winHeight - event.pageY > 100 && controlsVisible) {
+        controlsVisible = false;
+        self.controls.removeClass('presentation-controls-visible');
+      }
+    });
   };
 
   Presentation.prototype._showSlide = function(slideNumber, opts) {
@@ -220,6 +240,8 @@
 
     this.controls[this.currentSlideNumber == 0 ? 'addClass' : 'removeClass']('presentation-controls-first');
     this.controls[this.currentSlideNumber == this.slides.length - 1 ? 'addClass' : 'removeClass']('presentation-controls-last');
+
+    this.slideNumber.html(slideNumber + 1);
   };
 
 
@@ -264,6 +286,8 @@
     return false;
   };
 
+
+  /* Initialization */
   $(function() {
     var presentationContainers = $('.presentation');
 

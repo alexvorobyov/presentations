@@ -19,6 +19,7 @@ body.presentation-list {
     -webkit-transform: none!important;
     -moz-transform: none!important;
     -o-transform: none!important;
+    background-color: #fff;
 }
 
 body.presentation-active .presentations-menu {
@@ -49,12 +50,27 @@ body a, body a:visited {
     bottom: 12px;
     font-size: 30px;
     left: 14px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity 0.4s ease-out;
+    -moz-transition: opacity 0.4s ease-out;
+    -o-transition: opacity 0.4s ease-out;
+    transition: opacity 0.4s ease-out;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.presentation-controls.presentation-controls-visible {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transition: opacity 0.4s ease-out;
+    -moz-transition: opacity 0.4s ease-out;
+    -o-transition: opacity 0.4s ease-out;
+    transition: opacity 0.4s ease-out;
 }
 
 .presentation-controls a {
@@ -64,6 +80,14 @@ body a, body a:visited {
 .presentation-controls.presentation-controls-last .presentation-controls-next, .presentation-controls.presentation-controls-first .presentation-controls-prev {
     cursor: default;
     color: #333;
+}
+
+.presentation-slide-number {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    color: #999;
+    font-size: 12px;
 }
 
 .presentation-slide {
@@ -129,7 +153,7 @@ body a, body a:visited {
 
 .presentation-slide .presentation-slide-center {
     top: 50%;
-    left: 0%;
+    left: 0px;
     width: 100%;
     position: absolute;
     text-align: center;
